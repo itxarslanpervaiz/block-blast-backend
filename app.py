@@ -5,10 +5,16 @@ from solver import solve_puzzle
 from grid_detector import extract_grid
 
 app = Flask(__name__)
-CORS(app)
+
+# CORS: Allow only your WordPress domain
+CORS(app, origins=["https://thailandcapcuttemplate.arslanpervaiz.me"])
 
 UPLOAD_FOLDER = './uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/')
+def index():
+    return '✅ Block Blast API is running. Use POST /analyze.'
 
 @app.route('/analyze', methods=['POST'])
 def analyze_puzzle():
@@ -19,7 +25,7 @@ def analyze_puzzle():
     filepath = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(filepath)
 
-    grid = extract_grid(filepath)  # 2D array from image
+    grid = extract_grid(filepath)
     steps, total_lines = solve_puzzle(grid)
 
     return jsonify({
