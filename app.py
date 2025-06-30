@@ -5,8 +5,6 @@ from solver import solve_puzzle
 from grid_detector import extract_grid
 
 app = Flask(__name__)
-
-# CORS: Allow only your WordPress domain
 CORS(app, origins=["https://thailandcapcuttemplate.arslanpervaiz.me"])
 
 UPLOAD_FOLDER = './uploads'
